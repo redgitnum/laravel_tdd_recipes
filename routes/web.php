@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RecipeListController;
+use App\Http\Controllers\RecipeWantedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +14,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', [RecipeListController::class, 'index']);
+Route::get('/recipes/details/{recipe}', [RecipeListController::class, 'show']);
+Route::get('/recipes/search', [RecipeListController::class, 'search']);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/recipes/wanted', [RecipeWantedController::class, 'index']);
+Route::get('/recipes/request', [RecipeWantedController::class, 'create']);
+Route::post('/recipes/request', [RecipeWantedController::class, 'store']);
