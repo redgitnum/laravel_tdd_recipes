@@ -3,9 +3,9 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Models\User;
 use App\Models\Recipe;
 use App\Models\WantedRecipe;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ViewRecipesTest extends TestCase
@@ -14,8 +14,10 @@ class ViewRecipesTest extends TestCase
 
     public function test_see_recipe_details_page()
     {
+        User::factory()->create();
         Recipe::factory()->create([
-            'title' => 'Title of a test recipe'
+            'title' => 'Title of a test recipe',
+            'user_id' => 1
         ]);
 
         $response = $this->get('/recipes/details/1');
@@ -25,8 +27,10 @@ class ViewRecipesTest extends TestCase
 
     public function test_see_404_when_accessing_wrong_recipe_details_page()
     {
+        User::factory()->create();
         Recipe::factory()->create([
-            'title' => 'Title of a test recipe'
+            'title' => 'Title of a test recipe',
+            'user_id' => 1
         ]);
         $response = $this->get('/recipes/2');
         $response->assertStatus(404);
@@ -34,6 +38,7 @@ class ViewRecipesTest extends TestCase
 
     public function test_see_all_recipes()
     {
+        User::factory()->count(20)->create();
         $recipes = Recipe::factory()->count(10)->create();
         $response = $this->get('/');
         $response->assertOk();
@@ -42,6 +47,7 @@ class ViewRecipesTest extends TestCase
 
     public function test_search_recipes_shows_results_if_there_is_match()
     {
+        User::factory()->count(50)->create();
         $recipes = Recipe::factory()->count(100)->create();
         $recipe = $recipes->random();
 
@@ -52,6 +58,7 @@ class ViewRecipesTest extends TestCase
 
     public function test_search_recipes_shows_not_found_if_no_match()
     {
+        User::factory()->count(50)->create();
         Recipe::factory()->count(100)->create();
 
         $respone = $this->get('/recipes/search?query=randomstring');
@@ -61,7 +68,7 @@ class ViewRecipesTest extends TestCase
 
     public function test_search_recipes_shows_validation_errors_too_short()
     {
-
+        User::factory()->count(50)->create();
         Recipe::factory()->count(10)->create();
 
         $respone = $this->get('/recipes/search?query=dd');
@@ -71,7 +78,7 @@ class ViewRecipesTest extends TestCase
 
     public function test_search_recipes_shows_validation_errors_not_empty()
     {
-
+        User::factory()->count(10)->create();
         Recipe::factory()->count(10)->create();
 
         $respone = $this->get('/recipes/search?query=');
@@ -81,8 +88,6 @@ class ViewRecipesTest extends TestCase
 
     public function test_see_all_wanted_recipes()
     {
-        $this->withoutExceptionHandling();
-
         $wanted = WantedRecipe::factory()->create();
 
         $response = $this->get('/recipes/wanted');
