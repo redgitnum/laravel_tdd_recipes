@@ -12,6 +12,19 @@ class Recipe extends Model
     protected $fillable = [
         'title',
         'user_id',
-        'request_id'
+        'request_id',
+        'overview',
+        'ingredients',
+        'paragraph_1',
+        'paragraph_2',
+        'paragraph_3',
+        'paragraph_4',
+        'paragraph_5',
+        'paragraph_6',
+        'images',
+    ];
+
+    protected $casts = [
+        'ingredients' => 'array'
     ];
 }

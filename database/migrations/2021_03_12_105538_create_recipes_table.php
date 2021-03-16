@@ -18,6 +18,15 @@ class CreateRecipesTable extends Migration
             $table->string('title');
             $table->integer('request_id')->nullable();
             $table->foreignId('user_id')->constrained();
+            $table->string('overview');
+            $table->json('ingredients');
+            $table->text('paragraph_1');
+            $table->text('paragraph_2')->nullable();
+            $table->text('paragraph_3')->nullable();
+            $table->text('paragraph_4')->nullable();
+            $table->text('paragraph_5')->nullable();
+            $table->text('paragraph_6')->nullable();
+            $table->string('images')->nullable();
             $table->timestamps();
         });
     }

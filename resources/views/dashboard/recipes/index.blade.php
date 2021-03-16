@@ -1,4 +1,7 @@
 user recipes view
+@admin(auth()->user())
+Admin Panel
+@endadmin
 <ul>
     @forelse(auth()->user()->recipes as $recipe)
         <li>

@@ -86,7 +86,7 @@ class RecipeManageController extends Controller
     public function update(UpdateRecipeRequest $request, $id)
     {
         $recipe = Recipe::find($id);
-        if($recipe->user_id != auth()->id()){
+        if($recipe->user_id != auth()->id() && !auth()->user()->super_user){
             abort(403);
         }
         $recipe->update($request->validated());
@@ -102,7 +102,7 @@ class RecipeManageController extends Controller
     public function destroy($id)
     {
         $recipe = Recipe::findOrFail($id);
-        if($recipe->user_id != auth()->id()){
+        if($recipe->user_id != auth()->id() && !auth()->user()->super_user){
             abort(403);
         }
         $recipe->delete();

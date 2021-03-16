@@ -25,8 +25,17 @@ class CreateRecipeRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'request_id' => 'numeric'
+            'title' => 'required|min:10',
+            'request_id' => 'numeric',
+            'overview' => 'required|min:30',
+            'ingredients' => 'required|array',
+            'paragraph_1' => 'required|min:50',
+            'paragraph_2' => 'required_with:paragraph_3|min:50',
+            'paragraph_3' => 'required_with:paragraph_4|min:50',
+            'paragraph_4' => 'required_with:paragraph_5|min:50',
+            'paragraph_5' => 'required_with:paragraph_6|min:50',
+            'paragraph_6' => 'min:50',
+            'images' => 'string'
         ];
     }
 }
