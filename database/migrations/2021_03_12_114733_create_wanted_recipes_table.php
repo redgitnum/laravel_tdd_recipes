@@ -16,7 +16,7 @@ class CreateWantedRecipesTable extends Migration
         Schema::create('wanted_recipes', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->integer('user_id')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');;
             $table->timestamps();
         });
     }

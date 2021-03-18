@@ -27,10 +27,10 @@ class RecipeManageController extends Controller
      */
     public function create(Request $request)
     {
-        if(!$request->hasHeader('request_id')){
+        if(!$request->request_id){
             return view('dashboard.recipes.create');
         }
-        $wanted = WantedRecipe::findOrFail($request->header('request_id'));
+        $wanted = WantedRecipe::findOrFail($request->request_id);
         return view('dashboard.recipes.create', [
             'wanted' => $wanted
         ]);

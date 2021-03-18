@@ -10,7 +10,7 @@ class RecipeWantedController extends Controller
 {
     public function index()
     {
-        $recipes = WantedRecipe::all();
+        $recipes = WantedRecipe::with(['author:id,username'])->latest()->paginate(20);
         return view('recipes.wanted.index', [
             'recipes' => $recipes
         ]);

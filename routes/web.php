@@ -28,6 +28,7 @@ Route::post('/recipes/request', [RecipeWantedController::class, 'store']);
 Route::middleware('auth')->group(function () {
     Route::delete('/logout', [LoginController::class, 'destroy'])->name('logout');
     Route::prefix('dashboard')->as('dashboard.')->group(function () {
+        Route::view('/', 'dashboard.recipes.index');
         Route::resource('recipes', RecipeManageController::class);
     });
 });

@@ -13,4 +13,9 @@ class WantedRecipe extends Model
         'title',
         'user_id'
     ];
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

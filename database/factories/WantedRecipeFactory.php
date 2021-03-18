@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use App\Models\WantedRecipe;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,7 +23,8 @@ class WantedRecipeFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->jobTitle
+            'title' => $this->faker->jobTitle,
+            'user_id' =>User::all()->random()->id
         ];
     }
 }

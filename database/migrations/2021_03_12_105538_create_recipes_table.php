@@ -17,7 +17,7 @@ class CreateRecipesTable extends Migration
             $table->id();
             $table->string('title');
             $table->integer('request_id')->nullable();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('overview');
             $table->json('ingredients');
             $table->text('paragraph_1');

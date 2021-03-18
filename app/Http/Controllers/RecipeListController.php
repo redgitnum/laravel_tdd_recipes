@@ -11,7 +11,7 @@ class RecipeListController extends Controller
 {
     public function index()
     {
-        $recipes = Recipe::all();
+        $recipes = Recipe::with(['author:id,username'])->latest()->paginate(20, ['id', 'title', 'user_id', 'overview', 'ingredients', 'created_at']);
         return view('recipes.index', [
             'recipes' => $recipes
         ]);
