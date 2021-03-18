@@ -56,7 +56,7 @@ class RecipeManageController extends Controller
         }
         $validated = array_merge($request->validated(), ['user_id' => auth()->id()]);
         Recipe::create($validated);
-        return redirect()->route('recipes.index')->with('success', 'Recipe created successfully');
+        return redirect()->route('dashboard.recipes.index')->with('success', 'Recipe created successfully');
     }
 
     /**
@@ -90,7 +90,7 @@ class RecipeManageController extends Controller
             abort(403);
         }
         $recipe->update($request->validated());
-        return redirect()->route('recipes.index')->with('success', 'Recipe updated successfully');
+        return redirect()->route('dashboard.recipes.index')->with('success', 'Recipe updated successfully');
     }
 
     /**
@@ -106,6 +106,6 @@ class RecipeManageController extends Controller
             abort(403);
         }
         $recipe->delete();
-        return redirect()->route('recipes.index')->with('success', 'Recipe deleted successfully');
+        return redirect()->route('dashboard.recipes.index')->with('success', 'Recipe deleted successfully');
     }
 }

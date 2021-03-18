@@ -33,6 +33,7 @@ class AdminActionsTest extends TestCase
 
     public function test_can_delete_any_recipe_as_admin()
     {
+        $this->withExceptionHandling();
         $admin = User::factory()->create([
             'super_user' => 1
         ]);

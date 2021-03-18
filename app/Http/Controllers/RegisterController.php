@@ -20,11 +20,11 @@ class RegisterController extends Controller
         $validated = $request->validated();
         $validated['password'] = Hash::make($validated['password']);
         if(!User::create($validated)){
-            return redirect()->route('register')->with('failure', 'Something went wrong');
+            return redirect()->route('register')->withErrors(['failure' =>'Something went wrong'])->withInput();
         }
         if(!Auth::attempt($request->validated())){
             return redirect()->route('login')->with('failure', 'Invalid credentials');
         }
-        return redirect()->route('recipes.index');
+        return redirect()->route('dashboard.recipes.index');
     }
 }

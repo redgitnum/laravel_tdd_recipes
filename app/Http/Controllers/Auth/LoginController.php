@@ -17,8 +17,14 @@ class LoginController extends Controller
     public function store(LoginRequest $request)
     {
         if(!Auth::attempt($request->validated())){
-            return redirect()->route('login')->with('failure', 'Invalid credentials');
+            return redirect()->route('login')->withErrors(['failure' => 'Invalid credentials'])->withInput();
         }
-        return redirect()->route('recipes.index');
+        return redirect()->route('dashboard.recipes.index');
+    }
+
+    public function destroy()
+    {
+        abort_unless(!Auth::logout(), 400);
+        return redirect()->route('home');
     }
 }

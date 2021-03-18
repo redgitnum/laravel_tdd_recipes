@@ -105,4 +105,20 @@ class AuthTest extends TestCase
         $response->assertSessionHasErrors('email');
         $response->assertRedirect('/register');
     }
+
+    public function test_user_can_logout()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $response = $this->delete('/logout');
+        $this->assertGuest();
+        $response->assertRedirect('/');
+    }
+
+    public function test_guest_cannot_logout()
+    {
+        $response = $this->delete('/logout');
+        $this->assertGuest();
+        $response->assertRedirect('/login');
+    }
 }

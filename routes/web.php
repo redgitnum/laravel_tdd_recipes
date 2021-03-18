@@ -17,17 +17,21 @@ use App\Http\Controllers\RecipeWantedController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [RecipeListController::class, 'index']);
-Route::get('/recipes/details/{recipe}', [RecipeListController::class, 'show']);
-Route::get('/recipes/search', [RecipeListController::class, 'search']);
+Route::get('/', [RecipeListController::class, 'index'])->name('home');
+Route::get('/recipes/details/{recipe}', [RecipeListController::class, 'show'])->name('recipe.details');
+Route::get('/recipes/search', [RecipeListController::class, 'search'])->name('recipe.search');
 
-Route::get('/recipes/wanted', [RecipeWantedController::class, 'index']);
-Route::get('/recipes/request', [RecipeWantedController::class, 'create']);
+Route::get('/recipes/wanted', [RecipeWantedController::class, 'index'])->name('recipe.wanted');
+Route::get('/recipes/request', [RecipeWantedController::class, 'create'])->name('recipe.request');
 Route::post('/recipes/request', [RecipeWantedController::class, 'store']);
 
-Route::prefix('dashboard')->middleware('auth')->group(function () {
-    Route::resource('recipes', RecipeManageController::class);
+Route::middleware('auth')->group(function () {
+    Route::delete('/logout', [LoginController::class, 'destroy'])->name('logout');
+    Route::prefix('dashboard')->as('dashboard.')->group(function () {
+        Route::resource('recipes', RecipeManageController::class);
+    });
 });
+
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'create'])->name('login');
