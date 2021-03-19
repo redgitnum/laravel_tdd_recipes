@@ -88,6 +88,7 @@ class ViewRecipesTest extends TestCase
 
     public function test_see_all_wanted_recipes()
     {
+        User::factory()->create();
         $wanted = WantedRecipe::factory()->create();
 
         $response = $this->get('/recipes/wanted');

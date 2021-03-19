@@ -258,7 +258,7 @@ class ManageRecipesTest extends TestCase
         $wanted = WantedRecipe::factory()->create();
         $this->actingAs($user);
 
-        $response = $this->get('/dashboard/recipes/create', ['request_id' => $wanted->id]);
+        $response = $this->get('/dashboard/recipes/create?request_id='.$wanted->id);
         $response->assertSee($wanted->title);
     }
 
@@ -268,7 +268,7 @@ class ManageRecipesTest extends TestCase
         WantedRecipe::factory()->create();
         $this->actingAs($user);
 
-        $response = $this->get('/dashboard/recipes/create', ['request_id' => 5]);
+        $response = $this->get('/dashboard/recipes/create?request_id=5');
         $response->assertStatus(404);
     }
 
