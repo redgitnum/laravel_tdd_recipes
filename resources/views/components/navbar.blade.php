@@ -1,15 +1,22 @@
 <div class="flex justify-between py-2 text-lg px-6 bg-gray-200">
-    <ul>
+    <ul class="flex gap-4">
         <li>
-            <a href="{{ route('home') }}">
+            <a href="{{ route('home') }}" class="hover:text-gray-500">
                 Home
             </a>
         </li>
-    </ul>
-    <ul class="flex gap-2">
         @auth
         <li>
-            <a href="{{ route('dashboard.recipes.index') }}">
+            <a href="{{ route('dashboard.recipes.create') }}" class="hover:text-gray-500">
+                Create Recipe
+            </a>
+        </li>
+        @endauth
+    </ul>
+    <ul class="flex gap-4">
+        @auth
+        <li>
+            <a href="{{ route('dashboard.recipes.index') }}" class="hover:text-gray-500">
                 Dashboard
             </a>
         </li>
@@ -17,7 +24,7 @@
             <form action="{{ route('logout') }}" method="POST">
             @csrf
             @method('DELETE')
-            <button>
+            <button class="hover:text-gray-500">
                 Logout
             </button>
         </form>
@@ -25,12 +32,12 @@
         @endauth
         @guest
         <li>
-            <a href="{{ route('login') }}">
+            <a href="{{ route('login') }}" class="hover:text-gray-500">
                 Login
             </a>
             </li>
             <li>
-            <a href="{{ route('register') }}">
+            <a href="{{ route('register') }}" class="hover:text-gray-500">
                 Register
             </a>
         </li>
