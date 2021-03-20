@@ -10,5 +10,6 @@
 <body class="h-screen flex flex-col">
     <x-navbar />
     {{ $slot }}
+    <x-footer />
 </body>
 </html>

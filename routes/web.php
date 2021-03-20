@@ -17,7 +17,8 @@ use App\Http\Controllers\RecipeWantedController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [RecipeListController::class, 'index'])->name('home');
+Route::view('/', 'home')->name('home');
+Route::get('/recipes', [RecipeListController::class, 'index'])->name('recipe.index');
 Route::get('/recipes/details/{recipe}', [RecipeListController::class, 'show'])->name('recipe.details');
 Route::get('/recipes/search', [RecipeListController::class, 'search'])->name('recipe.search');
 
