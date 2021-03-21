@@ -12,7 +12,17 @@
                 </div>
             </div>
         @endforeach
-    @endif  
+    @endif 
+    
+    <nav class="bg-white shadow dark:bg-gray-800 w-full md:w-4/6 mt-5 mx-auto">
+        <div class="container px-6 py-3 mx-auto md:flex md:justify-between md:items-center">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="text-xl font-bold text-gray-800 dark:text-white md:text-2xl hover:text-gray-700 dark:hover:text-gray-300">Recipes</div>
+                </div>
+            </div>
+        <div>
+    </nav>
     
     <div class="w-full md:w-4/6 mt-5 mx-auto flex items-center">
         <a href="{{ route('recipe.index') }}" class="w-full text-center border-l border-t border-b text-base font-medium rounded-l-md text-white bg-blue-400 hover:bg-blue-300 px-4 py-2">
@@ -24,7 +34,7 @@
     </div>
 
     @forelse($recipes as $recipe)
-    <div class="w-full md:w-4/6 px-8 py-4 mx-auto mt-10 bg-white rounded-lg shadow-md dark:bg-gray-800">
+    <div class="w-full md:w-4/6 px-8 py-4 mx-auto mt-5 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <div class="flex items-center justify-start">
             <span class="text-sm font-light text-gray-600 dark:text-gray-400">{{ $recipe->created_at->toFormattedDateString() }}</span>
         </div>

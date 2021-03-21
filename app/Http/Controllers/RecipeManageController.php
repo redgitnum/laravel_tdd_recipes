@@ -17,7 +17,10 @@ class RecipeManageController extends Controller
      */
     public function index()
     {
-        return view('dashboard.recipes.index');
+        $userRecipes = auth()->user()->recipes()->with(['author'])->latest()->paginate();
+        return view('dashboard.recipes.index', [
+            'recipes' => $userRecipes
+        ]);
     }
 
     /**

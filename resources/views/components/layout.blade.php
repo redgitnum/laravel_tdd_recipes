@@ -7,7 +7,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <title>Recipe App</title>
 </head>
-<body class="h-screen flex flex-col">
+<body class="h-screen flex flex-col bg-gray-200">
     <x-navbar />
     {{ $slot }}
     <x-footer />

@@ -15,7 +15,20 @@
             </div>
         @endforeach
     @endif  
-    @forelse(auth()->user()->recipes()->paginate() as $recipe)
+
+
+    <nav class="bg-white shadow dark:bg-gray-800 w-full md:w-4/6 mt-5 mx-auto">
+        <div class="container px-6 py-3 mx-auto md:flex md:justify-between md:items-center">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="text-xl font-bold text-gray-800 dark:text-white md:text-2xl hover:text-gray-700 dark:hover:text-gray-300">Dashboard</div>
+                    <div class="text-sm text-gray-600">Your Recipes</div>
+                </div>
+            </div>
+        <div>
+    </nav>
+
+    @forelse($recipes as $recipe)
     <div class="w-4/6 px-8 py-4 mx-auto mt-5 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <div class="flex items-center justify-start">
             <span class="text-sm font-light text-gray-600 dark:text-gray-400">{{ $recipe->created_at->toFormattedDateString() }}</span>
@@ -43,8 +56,8 @@
     @endforelse
     <div class="flex justify-center mt-6 pb-12">
         <div class="w-3/5">
-            @if(auth()->user()->recipes)
-                {{ auth()->user()->recipes()->paginate()->links() }}
+            @if($recipes)
+                {{ $recipes->links() }}
             @endif
         </div>
     </div>

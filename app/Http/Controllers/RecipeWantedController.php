@@ -24,6 +24,8 @@ class RecipeWantedController extends Controller
     public function store(CreateWantedRequest $request)
     {
         WantedRecipe::create($request->validated());
+
+        return redirect()->route('recipe.wanted')->with('success', 'Recipe request successful');
     }
 
 }
