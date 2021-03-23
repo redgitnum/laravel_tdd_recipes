@@ -13,7 +13,7 @@ class Recipe extends Model
     protected $fillable = [
         'title',
         'user_id',
-        'request_id',
+        'request_user_id',
         'overview',
         'ingredients',
         'paragraph_1',

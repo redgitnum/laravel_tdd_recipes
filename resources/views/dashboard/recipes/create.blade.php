@@ -107,8 +107,11 @@
             <div id="inputs" class="grid grid-cols-1 gap-2 mt-4">
                 <div>
                     <label class="text-gray-700 dark:text-gray-200" for="title">Title</label>
-                    <input name="title" type="text" value="{{ old('title') }}" required minlength="10" maxlength="50"
+                    <input name="title" type="text" @isset($wanted) readonly @endisset value="@isset($wanted){{ $wanted->title }}@else{{ old('title') }}@endisset" required minlength="10" maxlength="50"
                     class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                    @isset($wanted)
+                        <input type="hidden" name="request_id" value="{{ $wanted->id }}">
+                    @endisset
                 </div>
 
                 <div>

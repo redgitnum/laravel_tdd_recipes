@@ -25,7 +25,8 @@ class CreateWantedRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'min:4', 'regex:/^[a-zA-Z]/'],
+            'title' => ['required', 'min:10', 'regex:/^[a-zA-Z]/'],
+            'user_id' => 'nullable'
         ];
     }
 
@@ -35,5 +36,12 @@ class CreateWantedRequest extends FormRequest
             'title.required' => 'Title cannot be empty',
             'title.regex' => 'The title cannot contain numbers or special characters'
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'user_id' => $this->user()->id
+        ]);
     }
 }

@@ -24,7 +24,7 @@ class WantedRecipeFactory extends Factory
     {
         return [
             'title' => $this->faker->jobTitle,
-            'user_id' =>User::all()->random()->id
+            'user_id' =>$this->faker->randomElement([null, User::all()->random()->id])
         ];
     }
 }

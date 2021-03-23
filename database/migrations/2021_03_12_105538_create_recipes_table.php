@@ -16,7 +16,7 @@ class CreateRecipesTable extends Migration
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->integer('request_id')->nullable();
+            $table->integer('request_user_id')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('overview');
             $table->json('ingredients');

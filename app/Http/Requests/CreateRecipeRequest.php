@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\WantedRecipe;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateRecipeRequest extends FormRequest
@@ -26,7 +27,7 @@ class CreateRecipeRequest extends FormRequest
     {
         return [
             'title' => 'required|min:10|max:50',
-            'request_id' => 'numeric',
+            'request_user_id' =>'nullable',
             'overview' => 'required|min:30|max:150',
             'ingredients' => 'required|array',
             'paragraph_1' => 'required|min:50|max:2000',
@@ -42,7 +43,8 @@ class CreateRecipeRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'ingredients' => array_map('trim', explode(',', $this->ingredients))
+            'ingredients' => array_map('trim', explode(',', $this->ingredients)),
+            'request_user_id' => WantedRecipe::find($this->request_id)->user_id
         ]);
     }
 }
