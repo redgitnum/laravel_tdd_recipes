@@ -33,4 +33,16 @@ class Recipe extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function getParagraphsAttribute()
+    {
+        return collect([
+            $this->paragraph_1, 
+            $this->paragraph_2,
+            $this->paragraph_3,
+            $this->paragraph_4,
+            $this->paragraph_5,
+            $this->paragraph_6
+            ])->filter();
+    }
 }

@@ -19,6 +19,7 @@ class RecipeListController extends Controller
 
     public function show(Recipe $recipe)
     {
+        $recipe->with('paragraphs');
         return view('recipes.show', [
             'recipe' => $recipe
         ]);
