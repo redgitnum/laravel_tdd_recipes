@@ -27,7 +27,8 @@
                 @endguest
                 @auth
                 <a class="my-1 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-500 dark:hover:text-indigo-400 md:mx-4 md:my-0" href="{{ route('dashboard.recipes.create') }}">Create Recipe</a>
-                <a class="my-1 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-500 dark:hover:text-indigo-400 md:mx-4 md:my-0" href="{{ route('dashboard.recipes.index') }}">Dashboard</a>
+                <a class="my-1 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-500 dark:hover:text-indigo-400 md:mx-4 md:my-0" 
+                href="{{ route('dashboard.recipes.index') }}">@admin(auth()->user()){{ 'Admin Panel' }}@else{{ 'Dashboard' }}@endadmin</a>
                 <form action="{{ route('logout') }}" method="POST" class="leading-none">
                     @csrf
                     @method('DELETE')

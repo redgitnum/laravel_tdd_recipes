@@ -17,7 +17,7 @@ class RecipeManageController extends Controller
      */
     public function index()
     {
-        $userRecipes = auth()->user()->recipes()->with(['author'])->latest()->paginate();
+        $userRecipes = auth()->user()->super_user ? Recipe::with(['author'])->latest()->paginate() : auth()->user()->recipes()->with(['author'])->latest()->paginate();
         return view('dashboard.recipes.index', [
             'recipes' => $userRecipes
         ]);
@@ -71,7 +71,7 @@ class RecipeManageController extends Controller
     public function edit($id)
     {
         $recipe = Recipe::findOrFail($id);
-        if($recipe->user_id != auth()->id()){
+        if($recipe->user_id != auth()->id() && !auth()->user()->super_user){
             abort(403);
         }
         return view('dashboard.recipes.edit', [
@@ -92,7 +92,7 @@ class RecipeManageController extends Controller
         if($recipe->user_id != auth()->id() && !auth()->user()->super_user){
             abort(403);
         }
-        $recipe->update($request->validated());
+        $recipe->update($request->all());
         return redirect()->route('dashboard.recipes.index')->with('success', 'Recipe updated successfully');
     }
 

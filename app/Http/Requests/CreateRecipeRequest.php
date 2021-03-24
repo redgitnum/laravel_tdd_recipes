@@ -30,6 +30,7 @@ class CreateRecipeRequest extends FormRequest
             'request_user_id' =>'nullable',
             'overview' => 'required|min:30|max:150',
             'ingredients' => 'required|array',
+            'ingredients.*' => 'required|min:3',
             'paragraph_1' => 'required|min:50|max:2000',
             'paragraph_2' => 'required_with:paragraph_3|min:50|max:2000',
             'paragraph_3' => 'required_with:paragraph_4|min:50|max:2000',
@@ -43,7 +44,7 @@ class CreateRecipeRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'ingredients' => array_map('trim', explode(',', $this->ingredients)),
+            'ingredients' => array_filter(array_map('trim', explode(',', $this->ingredients))),
             'request_user_id' => WantedRecipe::find($this->request_id)->user_id
         ]);
     }
