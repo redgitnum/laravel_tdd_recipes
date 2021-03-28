@@ -20,7 +20,7 @@ class RecipesValidationsTest extends TestCase
         $response = $this->post('/dashboard/recipes', [
             'title' => 'Pizza Dough maximus',
             'overview' => $this->faker->sentence(10),
-            'ingredients' => $this->faker->words(6),
+            'ingredients' => $this->faker->jobtitle,
             'paragraph_1' => $this->faker->text(),
             'paragraph_2' => $this->faker->text(),
             'paragraph_3' => $this->faker->text(),
@@ -47,7 +47,7 @@ class RecipesValidationsTest extends TestCase
         ]);
 
         $response->assertStatus(302);
-        $response->assertRedirect('/dashboard/recipes');
+        $response->assertRedirect('/dashboard/recipes/create');
         $this->assertDatabaseMissing('recipes', ['title' => 'Pizza Dough maximus']);
         $response->assertSessionHasErrors('ingredients');
     }
@@ -60,7 +60,7 @@ class RecipesValidationsTest extends TestCase
         $response = $this->post('/dashboard/recipes', [
             'title' => 'Pizza Dough maximus',
             'overview' => $this->faker->sentence(10),
-            'ingredients' => $this->faker->words(6),
+            'ingredients' => $this->faker->jobtitle,
             'paragraph_1' => $this->faker->text(),
             'paragraph_2' => '',
             'paragraph_3' => $this->faker->text(),
@@ -68,7 +68,7 @@ class RecipesValidationsTest extends TestCase
         ]);
 
         $response->assertStatus(302);
-        $response->assertRedirect('/dashboard/recipes');
+        $response->assertRedirect('/dashboard/recipes/create');
         $this->assertDatabaseMissing('recipes', ['title' => 'Pizza Dough maximus']);
         $response->assertSessionHasErrors('paragraph_2');
     }
@@ -81,12 +81,12 @@ class RecipesValidationsTest extends TestCase
         $response = $this->post('/dashboard/recipes', [
             'title' => 'Pizza',
             'overview' => $this->faker->sentence(10),
-            'ingredients' => $this->faker->words(6),
+            'ingredients' => $this->faker->jobtitle,
             'paragraph_1' => $this->faker->text(),
         ]);
 
         $response->assertStatus(302);
-        $response->assertRedirect('/dashboard/recipes');
+        $response->assertRedirect('/dashboard/recipes/create');
         $this->assertDatabaseMissing('recipes', ['title' => 'Pizza Dough maximus']);
         $response->assertSessionHasErrors('title');
     }

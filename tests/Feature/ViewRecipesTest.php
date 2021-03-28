@@ -40,7 +40,7 @@ class ViewRecipesTest extends TestCase
     {
         User::factory()->count(20)->create();
         $recipes = Recipe::factory()->count(10)->create();
-        $response = $this->get('/');
+        $response = $this->get('/recipes');
         $response->assertOk();
         $response->assertSee($recipes->first()->title);
     }
@@ -108,7 +108,7 @@ class ViewRecipesTest extends TestCase
             'title' => 'Random recipe title request'
         ]);
         $wanted = WantedRecipe::first();
-        $response->assertOk();
+        $response->assertStatus(302);
         $this->assertEquals('Random recipe title request', $wanted->title);
     }
 
@@ -128,7 +128,7 @@ class ViewRecipesTest extends TestCase
             'title' => 'Cak'
         ]);
         $response->assertSessionHasErrors('title');
-        $this->followRedirects($response)->assertSee('The title must be at least 4 characters');
+        $this->followRedirects($response)->assertSee('The title must be at least 10 characters long');
         $this->assertDatabaseMissing('wanted_recipes', ['title' => 'Cak']);
     }
 

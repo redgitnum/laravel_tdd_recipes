@@ -34,14 +34,15 @@ class CreateWantedRequest extends FormRequest
     {
         return [
             'title.required' => 'Title cannot be empty',
-            'title.regex' => 'The title cannot contain numbers or special characters'
+            'title.regex' => 'The title cannot contain numbers or special characters',
+            'title.min' => 'The title must be at least 10 characters long',
         ];
     }
 
     protected function prepareForValidation()
     {
         $this->merge([
-            'user_id' => $this->user()->id
+            'user_id' => auth()->id()
         ]);
     }
 }

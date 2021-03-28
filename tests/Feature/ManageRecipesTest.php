@@ -41,15 +41,15 @@ class ManageRecipesTest extends TestCase
 
     public function test_create_recipe_form_works()
     {
+        $this->withExceptionHandling();
         $user = User::factory()->create();
         $this->actingAs($user);
         $response = $this->post('/dashboard/recipes', [
             'title' => 'Pizza dough',
             'overview' => $this->faker->sentence(10),
-            'ingredients' => $this->faker->words(6),
-            'paragraph_1' => $this->faker->text(),
+            'ingredients' => $this->faker->jobtitle,
+            'paragraph_1' => $this->faker->text(300),
         ]);
-
         $response->assertStatus(302);
         $response->assertRedirect('/dashboard/recipes');
         $this->assertDatabaseHas('recipes', ['title' => 'Pizza dough']);
@@ -62,7 +62,7 @@ class ManageRecipesTest extends TestCase
         $response = $this->post('/dashboard/recipes', [
             'title' => 'Pizza dough',
             'overview' => $this->faker->sentence(10),
-            'ingredients' => $this->faker->words(6),
+            'ingredients' => $this->faker->jobtitle,
             'paragraph_1' => $this->faker->text(),
         ]);
         $response->assertSessionHas('success');
@@ -87,7 +87,7 @@ class ManageRecipesTest extends TestCase
             'title' => ''
         ]);
         $response->assertStatus(302);
-        $response->assertRedirect('/dashboard/recipes');
+        $response->assertRedirect('/dashboard/recipes/create');
         $this->assertDatabaseMissing('recipes', ['title' => '']);
     }
 
@@ -138,11 +138,14 @@ class ManageRecipesTest extends TestCase
         $this->actingAs($user);
 
         $response = $this->put('/dashboard/recipes/1', [
-            'title' => 'Updated Recipe Title'
+            'title' => 'Updated Recipe title',
+            'overview' => $this->faker->sentence(10),
+            'ingredients' => $this->faker->jobTitle,
+            'paragraph_1' => $this->faker->text(),
         ]);
         $response->assertStatus(302);
         $response->assertRedirect('/dashboard/recipes');
-        $this->assertDatabaseHas('recipes', ['title' => 'Updated Recipe Title']);
+        $this->assertDatabaseHas('recipes', ['title' => 'Updated Recipe title']);
     }
 
     public function test_update_recipe_success_session_message()
@@ -152,7 +155,10 @@ class ManageRecipesTest extends TestCase
         $this->actingAs($user);
 
         $response = $this->put('/dashboard/recipes/1', [
-            'title' => 'Updated Recipe Title'
+            'title' => 'Updated title',
+            'overview' => $this->faker->sentence(10),
+            'ingredients' => $this->faker->jobTitle,
+            'paragraph_1' => $this->faker->text(),
         ]);
         $response->assertSessionHas('success');
     }
@@ -164,7 +170,10 @@ class ManageRecipesTest extends TestCase
         $this->actingAs($users->first());
 
         $response = $this->put('/dashboard/recipes/1', [
-            'title' => 'Updated Recipe Title'
+            'title' => 'Updated Recipe Title',
+            'overview' => $this->faker->sentence(10),
+            'ingredients' => $this->faker->jobtitle,
+            'paragraph_1' => $this->faker->text(),
         ]);
         $response->assertStatus(403);
         $this->assertDatabaseMissing('recipes', ['title' => 'Updated Recipe Title']);
@@ -190,7 +199,10 @@ class ManageRecipesTest extends TestCase
         $this->actingAs($user);
 
         $response = $this->put('/dashboard/recipes/1', [
-            'title' => ''
+            'title' => '',
+            'overview' => $this->faker->sentence(10),
+            'ingredients' => $this->faker->jobTitle,
+            'paragraph_1' => $this->faker->text(),
         ]);
         $response->assertStatus(302);
         $response->assertRedirect('/dashboard/recipes');
@@ -282,28 +294,28 @@ class ManageRecipesTest extends TestCase
             'title' => 'Pizza dough',
             'request_id' => $wanted->id,
             'overview' => $this->faker->sentence(10),
-            'ingredients' => $this->faker->words(6),
+            'ingredients' => $this->faker->jobTitle,
             'paragraph_1' => $this->faker->text(),
         ]);
         $response->assertStatus(302);
-        $this->assertDatabaseHas('recipes', ['request_id' => $wanted->id]);
+        $this->assertDatabaseHas('recipes', ['request_user_id' => $wanted->id]);
     }
 
-    public function test_recipe_request_removed_after_successfull_create_recipe_from_requested_recipe()
+    public function test_recipe_request_removed_after_successful_create_recipe_from_requested_recipe()
     {
         $user = User::factory()->create();
-        $wanted = WantedRecipe::factory()->create();
+        $user2 = User::factory()->create();
+        $wanted = WantedRecipe::factory()->create(['user_id' => $user2->id]);
         $this->actingAs($user);
-
         $response = $this->post('/dashboard/recipes', [
             'title' => 'Pizza dough',
             'request_id' => $wanted->id,
             'overview' => $this->faker->sentence(10),
-            'ingredients' => $this->faker->words(6),
+            'ingredients' => $this->faker->jobtitle,
             'paragraph_1' => $this->faker->text(),
         ]);
         $response->assertStatus(302);
-        $this->assertDatabaseHas('recipes', ['request_id' => $wanted->id]);
+        $this->assertDatabaseHas('recipes', ['request_user_id' => $wanted->user_id]);
         $this->assertDatabaseMissing('wanted_recipes', ['id' => $wanted->id]);
     }
 
@@ -317,7 +329,7 @@ class ManageRecipesTest extends TestCase
             'title' => 'Pizza dough',
             'request_id' => 2,
             'overview' => $this->faker->sentence(10),
-            'ingredients' => $this->faker->words(6),
+            'ingredients' => $this->faker->jobtitle,
             'paragraph_1' => $this->faker->text(),
         ]);
         $response->assertStatus(400);

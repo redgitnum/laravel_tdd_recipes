@@ -43,9 +43,11 @@ class CreateRecipeRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        $wanted = WantedRecipe::find($this->request_id);
         $this->merge([
             'ingredients' => array_filter(array_map('trim', explode(',', $this->ingredients))),
-            'request_user_id' => WantedRecipe::find($this->request_id)->user_id
+            'request_user_id' => $wanted ? $wanted->user_id : null
         ]);
+
     }
 }

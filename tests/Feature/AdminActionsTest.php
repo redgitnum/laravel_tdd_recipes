@@ -58,9 +58,11 @@ class AdminActionsTest extends TestCase
             'user_id' => $user->id
         ]);
         $this->actingAs($admin);
-
         $response = $this->put('/dashboard/recipes/'.$recipe->id, [
-            'title' => 'Updated Recipe Title'
+            'title' => 'Updated Recipe Title',
+            'overview' => $recipe->overview,
+            'ingredients' => implode(',', $recipe->ingredients),
+            'paragraph_1' => $recipe->paragraph_1 
         ]);
         $response->assertStatus(302);
         $response->assertRedirect('/dashboard/recipes');

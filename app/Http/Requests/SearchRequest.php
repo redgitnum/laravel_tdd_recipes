@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class SearchRequest extends FormRequest
 {
 
-    protected $redirect = '/';
+    protected $redirect = '/recipes';
     /**
      * Determine if the user is authorized to make this request.
      *

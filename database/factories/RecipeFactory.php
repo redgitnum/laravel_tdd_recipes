@@ -23,10 +23,10 @@ class RecipeFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->jobTitle,
+            'title' => $this->faker->jobTitle.' recipe',
             'user_id' =>User::all()->random()->id,
             'overview' => $this->faker->sentence(10),
-            'ingredients' => $this->faker->words(6),
+            'ingredients' => $this->faker->randomElements(['flour', 'sugar', 'milk', 'water', 'oil', 'salt', 'eggs', 'pepper', 'garlic powder', 'cheese', 'salami', 'chicken'], 3),
             'paragraph_1' => $this->faker->text(),
             'paragraph_2' => $this->faker->text(),
             'paragraph_3' => $this->faker->text(),

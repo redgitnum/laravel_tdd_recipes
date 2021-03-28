@@ -47,6 +47,7 @@ class RecipeManageController extends Controller
      */
     public function store(CreateRecipeRequest $request)
     {
+        
         if(!auth()->check()){
             abort(403);
         }
